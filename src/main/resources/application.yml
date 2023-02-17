@@ -1,0 +1,34 @@
+eureka:
+  client:
+    serviceUrl.defaultZone: http://20.102.105.189:8761/eureka
+    instance.preferIpAddress: true
+server:
+  port: 8080
+management:
+  endpoints: 
+      web: 
+        exposure: 
+          include: '*'
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+      - id: claims
+        uri: lb://claims
+        predicates:
+        - Path=/claims/**
+      - id: facility
+        uri: lb://facility
+        predicates:
+        - Path=/facility/**
+      - id: customer
+        uri: lb://customer
+        predicates:
+        - Path=/customer/**
+      - id: login
+        uri: lb://user
+        predicates:
+        - Path=/user/**
